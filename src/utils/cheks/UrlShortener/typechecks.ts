@@ -1,5 +1,5 @@
 import { env } from 'src/index'
-import { generateRandomString } from 'src/utils/stringGenerator'
+import { generateShortenUrl, generateRandomShortenUrl } from 'src/utils/stringGenerator'
 import { ReceivedUrlShortener } from 'src/utils/types'
 import { isBoolean, isIntegerNumber, isString, isUrl } from 'src/utils/cheks/basicTypeChecks'
 
@@ -9,6 +9,22 @@ const parseOriginal = (originalFromRequest: any): string => {
   }
 
   return originalFromRequest
+}
+
+const parseShorten = (shortenFromRequest: any): string => {
+  if (shortenFromRequest === null || shortenFromRequest === undefined) {
+    return generateRandomShortenUrl(env.GENERATED_PATH_LENGTH)
+  }
+
+  if (isUrl(shortenFromRequest)) {
+    throw new Error('Incorrect shorten url.')
+  }
+
+  if (!isString(shortenFromRequest)) {
+    throw new Error('Incorrect shorten url.')
+  }
+
+  return generateShortenUrl(shortenFromRequest)
 }
 
 const parseActive = (activeFromRequest: any): boolean => {
@@ -44,7 +60,7 @@ const parseClicks = (clicksFromRequest: any): number => {
 export const toReceivedUrlShortener = (object: any): ReceivedUrlShortener => {
   const receivedUrlShortener: ReceivedUrlShortener = {
     original: parseOriginal(object.original),
-    shorten: isString(object.shorten) ? object.shorten : generateRandomString(env.GENERATED_PATH_LENGTH),
+    shorten: parseShorten(object.shorten),
     active: parseActive(object.active),
     clicks: parseClicks(object.clicks)
   }
