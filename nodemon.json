@@ -7,9 +7,9 @@
         "node_modules"
     ],
 
-    "watch": ["src"],
+    "watch": ["src", "docs"],
     "exec": "node -r tsconfig-paths/register -r ts-node/register ./src/index.ts",
-    "ext": "ts, js"
+    "ext": "ts, js, yaml"
 
 
 }
