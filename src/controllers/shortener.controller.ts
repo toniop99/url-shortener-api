@@ -15,11 +15,14 @@ export async function createShortenUrl (req: Request, res: Response): Promise<vo
 
     await newUrlModel.save()
 
-    res.status(201).json({
-      'object created': newUrlModel.toJSON()
-    })
+    res.status(201).json(newUrlEntry)
   } catch (e) {
-    res.status(400).json(e.message)
+    // TODO: Change the way of getting this error
+    if (e.code === 11000) {
+      res.status(400).json({ message: 'Shorten url already exists' })
+    } else {
+      res.status(400).json({ message: e.message })
+    }
   }
 }
 
@@ -27,17 +30,19 @@ export async function deleteShortenUrl (req: Request, res: Response): Promise<vo
   const shorten = req.body.path
   const deleted = await UrlModel.deleteOne({ shorten })
 
-  if (deleted.deletedCount !== undefined && deleted.deletedCount === 0) {
-    res.status(200).json({
-      'object not found': true
-    }).end()
-  } else if (deleted.ok !== undefined) {
-    res.status(200).json({
-      'object deleted': true
-    }).end()
-  } else {
-    res.status(404).json({
-      Error: true
+  try {
+    if (deleted.deletedCount !== undefined && deleted.deletedCount === 0) {
+      res.status(404).json({
+        message: 'url not found'
+      }).end()
+    } else if (deleted.ok !== undefined) {
+      res.status(200).json({
+        message: 'url deleted satisfactorily'
+      }).end()
+    }
+  } catch (e) {
+    res.status(500).json({
+      message: e.message
     }).end()
   }
 }

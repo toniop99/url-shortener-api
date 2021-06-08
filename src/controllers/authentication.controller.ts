@@ -11,7 +11,7 @@ export async function login (req: Request, res: Response): Promise<void> {
     const newUserModel = await UserModel.findOne({ username: newUserEntry.username })
 
     if (!newUserModel) {
-      res.status(400).json({ message: 'User not found' }).end()
+      res.status(404).json({ message: 'User not found' }).end()
       return
     }
 
@@ -27,7 +27,7 @@ export async function login (req: Request, res: Response): Promise<void> {
     const token = jwt.sign({ id: newUserModel?._id }, env.KEY, {
       expiresIn: '7d'
     })
-    res.json({
+    res.status(200).json({
       message: 'Login Success',
       token: token
     })
