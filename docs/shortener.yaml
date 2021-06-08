@@ -1,0 +1,134 @@
+paths:
+  /create:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - Url
+      summary: Create a short url
+      description: 
+      operationId: createShortUrl
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Url"
+      responses:
+        201:
+          description: Object created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  original:
+                    type: string
+                  shorten:
+                    type: string
+                  clicks:
+                    type: integer
+                  active:
+                    type: boolean
+        400:
+          description: Internal error
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+        404:
+          description: User not found
+  /delete:
+      delete:
+        tags:
+          - Url
+        summary: Delete a short url
+        description:
+        operationId: deleteShortUrl
+        consumes:
+          - "application/json"
+        produces:
+          - application/json
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                properties:
+                  shorten:
+                  type: string
+                  description: The shorten url to delete
+                required:
+                  - shorten
+                example:
+                  shorten: https://shorten.shorten/qweRT
+                
+        responses:
+          200:
+            description: The url was deeted satisfactorily
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      value: "url deleted satisfactorily"
+                  example:
+          404:
+            description: Url to delete not found
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      value: "url not found"
+          500:
+            description: Server error
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+  schemas:
+    Url:
+      type: object
+      properties:
+        original:
+          type: string
+          description: User name
+        shorten:
+          type: string
+          description: User password
+        active:
+          type: boolean
+          description: ¿Active Url?
+        clicks:
+          type: Integer
+          minimun: 0
+          description: Number of clicks on the url
+      required:
+        - original
+        - active
+        - clicks
+      example:
+        original: https://test.test
+        active: true
+        clicks: 0

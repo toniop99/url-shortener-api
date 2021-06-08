@@ -1,0 +1,89 @@
+paths:
+  /user/login:
+    post:
+      tags:
+        - User
+      summary: Log In a user
+      description:
+      operationId: loginUser
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        200:
+          description: An object with jwt token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    value: "Login Success"
+                  token:
+                    type: string
+        400:
+          description: Return the message error
+        401:
+          description: Password must be invalid
+        404:
+          description: User not found
+  /user/register:
+      post:
+        tags:
+          - User
+        summary: Register an user
+        description:
+        operationId: registerUser
+        consumes:
+          - "application/json"
+        produces:
+          - application/json
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        responses:
+          201:
+            description: An object with jwt token
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      value: "User created satisfactorily"
+                    token:
+                      type: string
+          409:
+            description: User already exists
+          500:
+            description: Server error
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          description: User name
+        password:
+          type: string
+          description: User password
+      required:
+        - username
+        - password
+      example:
+        username: test
+        password: testpassword
