@@ -5,7 +5,8 @@ export const checkDuplicateUsername = async (req: Request, res: Response, next: 
   try {
     const user = await UserModel.findOne({ username: req.body.username })
     if (user != null) {
-      res.status(400).json({ message: 'The user already exists.' })
+      res.status(409).json({ message: 'The user already exists.' })
+      return
     }
     next()
   } catch (e) {

@@ -7,11 +7,11 @@ import { env } from '..'
 export const verifyToken: Handler = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization
   if (token === undefined) {
-    return res.status(403).json({ message: 'No token provided' })
+    return res.status(401).json({ message: 'No token provided' })
   }
 
   if (typeof token !== 'string') {
-    return res.status(403).json({ message: 'The token provided is not a string' })
+    return res.status(401).json({ message: 'The token provided is not a string' })
   }
 
   try {
