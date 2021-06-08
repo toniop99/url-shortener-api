@@ -30,14 +30,19 @@ async function startApi (): Promise<void> {
   app.use(express.json())
   app.use(cors())
 
-  app.use(morgan('dev'))
+  if (app.get('env') === 'production') {
+    app.use(morgan('combined'))
+  } else {
+    app.use(morgan('dev'))
+  }
+
   app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }))
   app.use('/v1/api', shortenerRoutes)
   app.use('/v1/api/user', authenticationRoutes)
   app.use(redirectorRoutes)
 
   app.get('/', (_, res) => {
-    res.json({ message: 'Base Path' })
+    res.json({ message: `Go to ${env.BASE_URL}docs to see the documentation.` })
   })
   app.listen(env.PORT, () => console.log(`Running on port ${env.PORT}`))
 }
