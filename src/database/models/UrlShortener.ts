@@ -8,10 +8,10 @@ export interface DatabaseUrl extends Document {
 }
 
 const Url: Schema = new Schema({
-  original: String,
-  shorten: String,
+  original: { type: String, required: true },
+  shorten: { type: String, unique: true, required: true },
   clicks: { type: Number, default: 0 },
-  active: Boolean
+  active: { type: Boolean, default: false }
 }, {
   timestamps: true,
   versionKey: false
