@@ -1,5 +1,5 @@
 import { model, Schema, Document } from 'mongoose'
-import { User } from 'src/utils/types'
+import { User } from '../../utils/types'
 
 const UserSchemaFields: Record<keyof User, any> = {
   username: { type: String, unique: true },

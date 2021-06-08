@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { UrlModel } from 'src/database/models/UrlShortener'
-import { env } from 'src/index'
+import { UrlModel } from '../database/models/UrlShortener'
+import { env } from '../index'
 
 export async function redirectToPath (req: Request, res: Response): Promise<void> {
   const path = req.params.path

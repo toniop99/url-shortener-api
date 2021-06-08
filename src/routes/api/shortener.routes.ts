@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { verifyToken } from 'src/middlewares/authJwt'
-import * as shortenerController from 'src/controllers/shortener.controller'
+import { verifyToken } from '../../middlewares/authJwt'
+import * as shortenerController from '../../controllers/shortener.controller'
 const shortenerRoutes = Router()
 
 shortenerRoutes.get('/', (_, res) => res.json('test'))

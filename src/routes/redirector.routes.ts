@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import * as redirectorController from 'src/controllers/redirector.controller'
+import * as redirectorController from '../controllers/redirector.controller'
 
 const redirectorRoutes = Router()
 

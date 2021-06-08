@@ -1,5 +1,5 @@
 import { connect } from 'mongoose'
-import { env } from 'src/index'
+import { env } from '../index'
 
 export const databaseConnection = async (): Promise<void> => {
   try {

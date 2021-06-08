@@ -1,9 +1,9 @@
 import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
-import { UserModel } from 'src/database/models/User'
-import { toReceivedUser } from 'src/utils/cheks/User/typeChecks'
-import { comparePassword, encryptPassword } from 'src/utils/utils'
-import { env } from '..'
+import { UserModel } from '../database/models/User'
+import { toReceivedUser } from '../utils/cheks/User/typeChecks'
+import { comparePassword, encryptPassword } from '../utils/utils'
+import { env } from '../index'
 
 export async function login (req: Request, res: Response): Promise<void> {
   try {

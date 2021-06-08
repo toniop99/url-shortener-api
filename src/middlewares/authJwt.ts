@@ -1,8 +1,8 @@
 import { Handler, NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
-import { UserModel } from 'src/database/models/User'
-import { jwtDecodedData } from 'src/utils/types'
-import { env } from '..'
+import { UserModel } from '../database/models/User'
+import { jwtDecodedData } from '../utils/types'
+import { env } from '../index'
 
 export const verifyToken: Handler = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization

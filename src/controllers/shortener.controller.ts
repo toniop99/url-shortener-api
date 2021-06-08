@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { UrlModel } from 'src/database/models/UrlShortener'
-import { toReceivedUrlShortener } from 'src/utils/cheks/UrlShortener/typechecks'
+import { UrlModel } from '../database/models/UrlShortener'
+import { toReceivedUrlShortener } from '../utils/cheks/UrlShortener/typechecks'
 
 export async function createShortenUrl (req: Request, res: Response): Promise<void> {
   try {

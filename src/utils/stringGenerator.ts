@@ -1,5 +1,5 @@
 import randomstring from 'randomstring'
-import { env } from 'src/index'
+import { env } from '../index'
 
 export function generateRandomShortenUrl (length: number): string {
   const baseUrl = env.BASE_URL

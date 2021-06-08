@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { UserModel } from 'src/database/models/User'
+import { UserModel } from '../database/models/User'
 
 export const checkDuplicateUsername = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
   try {

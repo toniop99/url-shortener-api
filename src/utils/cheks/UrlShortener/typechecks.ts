@@ -1,7 +1,7 @@
-import { env } from 'src/index'
-import { generateShortenUrl, generateRandomShortenUrl } from 'src/utils/stringGenerator'
-import { ReceivedUrlShortener } from 'src/utils/types'
-import { isBoolean, isIntegerNumber, isString, isUrl } from 'src/utils/cheks/basicTypeChecks'
+import { env } from '../../../index'
+import { generateShortenUrl, generateRandomShortenUrl } from '../../stringGenerator'
+import { ReceivedUrlShortener } from '../../types'
+import { isBoolean, isIntegerNumber, isString, isUrl } from '../../cheks/basicTypeChecks'
 
 const parseOriginal = (originalFromRequest: any): string => {
   if (!isUrl(originalFromRequest)) {

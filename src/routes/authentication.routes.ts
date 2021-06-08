@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { checkDuplicateUsername } from 'src/middlewares/verifySignUp'
-import { login, register } from 'src/controllers/authentication.controller'
+import { checkDuplicateUsername } from '../middlewares/verifySignUp'
+import { login, register } from '../controllers/authentication.controller'
 const authenticationRoutes = Router()
 
 authenticationRoutes.post('/login', login)
