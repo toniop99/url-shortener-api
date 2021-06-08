@@ -1,10 +1,16 @@
 import express from 'express'
+import { load } from 'ts-dotenv'
+import morgan from 'morgan'
+import cors from 'cors'
+import swaggerJsdoc from 'swagger-jsdoc'
+import swaggerUi from 'swagger-ui-express'
+
 import { databaseConnection } from './database/connection'
 import { shortenerRoutes } from './routes/api/shortener.routes'
 import { redirectorRoutes } from './routes/redirector.routes'
 import { authenticationRoutes } from './routes/authentication.routes'
-import { load } from 'ts-dotenv'
 
+import { getSwaggerOptions } from './swaggerOptions'
 export const env = load({
   PORT: Number,
   KEY: String,
@@ -19,10 +25,15 @@ async function startApi (): Promise<void> {
   await databaseConnection()
   const app = express()
 
+  const specs = swaggerJsdoc(getSwaggerOptions())
   app.use(express.urlencoded({ extended: false }))
   app.use(express.json())
+  app.use(cors())
+
+  app.use(morgan('dev'))
+  app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }))
   app.use('/v1/api', shortenerRoutes)
-  app.use(authenticationRoutes)
+  app.use('/v1/api/user', authenticationRoutes)
   app.use(redirectorRoutes)
 
   app.get('/', (_, res) => {
