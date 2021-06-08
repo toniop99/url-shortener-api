@@ -42,6 +42,8 @@ paths:
           description: User not found
   /delete:
       delete:
+        security:
+        - bearerAuth: []
         tags:
           - Url
         summary: Delete a short url
