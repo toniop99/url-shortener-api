@@ -19,7 +19,7 @@ export const getSwaggerOptions = (): SwaggerOptions => {
       },
       servers: [
         {
-          url: path.join(env.BASE_URL, 'v1/apì')
+          url: path.join(env.BASE_URL, 'v1/api')
         }
       ]
     },
