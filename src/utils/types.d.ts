@@ -3,15 +3,18 @@ export interface UrlShortener {
   shorten?: string
   clicks: number
   active: boolean
+  creator: string
 }
 export type ReceivedUrlShortener = UrlShortener
 
 export interface User {
+  _id?: string
   username: string
   password: string
 }
 
-export type ReceivedUser = User
+export type DatabaseUser = Omit<User, '_id'>
+export type ReceivedUser = Omit<User, '_id'>
 export type NonSensitiveUser = Omit<User, 'password'>
 
 export interface jwtDecoded {

@@ -1,7 +1,7 @@
 import { env } from '../../../index'
 import { generateShortenUrl, generateRandomShortenUrl } from '../../stringGenerator'
-import { ReceivedUrlShortener } from '../../types'
-import { isBoolean, isIntegerNumber, isString, isUrl } from '../../cheks/basicTypeChecks'
+import { NonSensitiveUser, ReceivedUrlShortener, UrlShortener } from '../../types'
+import { isBoolean, isString, isUrl } from '../../cheks/basicTypeChecks'
 
 const parseOriginal = (originalFromRequest: any): string => {
   if (!isUrl(originalFromRequest)) {
@@ -45,25 +45,27 @@ const parseActive = (activeFromRequest: any): boolean => {
   return activeFromRequest
 }
 
-const parseClicks = (clicksFromRequest: any): number => {
-  if (!isIntegerNumber(clicksFromRequest)) {
-    throw new Error('The url clicks parameter must be an integer number.')
-  }
-
-  if (clicksFromRequest < 0) {
-    throw new Error('The url clicks parameter must be bigger or equal than zero.')
-  }
-
-  return clicksFromRequest
-}
-
-export const toReceivedUrlShortener = (object: any): ReceivedUrlShortener => {
+export const toReceivedUrlShortener = (object: any, user: NonSensitiveUser): ReceivedUrlShortener => {
   const receivedUrlShortener: ReceivedUrlShortener = {
     original: parseOriginal(object.original),
     shorten: parseShorten(object.shorten),
     active: parseActive(object.active),
-    clicks: parseClicks(object.clicks)
+    clicks: 0,
+    creator: user._id!
   }
 
   return receivedUrlShortener
+}
+
+export const toSendUrlShortenerList = (objects: any[]): UrlShortener[] => {
+  return objects.map(object => {
+    const urlSortener: UrlShortener = {
+      original: object.original,
+      shorten: object.shorten,
+      clicks: object.clicks,
+      active: object.active,
+      creator: object.creator
+    }
+    return urlSortener
+  })
 }

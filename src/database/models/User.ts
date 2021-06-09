@@ -1,7 +1,7 @@
 import { model, Schema, Document } from 'mongoose'
-import { User } from '../../utils/types'
+import { DatabaseUser } from '../../utils/types'
 
-const UserSchemaFields: Record<keyof User, any> = {
+const UserSchemaFields: Record<keyof DatabaseUser, any> = {
   username: { type: String, unique: true },
   password: { type: String, required: true }
 }
@@ -11,6 +11,6 @@ const UserSchema = new Schema(UserSchemaFields, {
   versionKey: false
 })
 
-interface UserDocument extends User, Document {}
+interface UserDocument extends DatabaseUser, Document {}
 
 export const UserModel = model<UserDocument>('User', UserSchema)
