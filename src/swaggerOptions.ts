@@ -6,14 +6,18 @@ export const getSwaggerOptions = (): SwaggerOptions => {
     definition: {
       openapi: '3.0.0',
       info: {
-        title: 'Url shortener API',
+        title: 'Url shortener - API',
         version: '0.1.0',
         description:
-          'An api for short urls',
+          'A simple api to use shortened urls and other interesting stuff',
         contact: {
           name: 'Antonio',
           url: 'https://antoniohnz.me',
           email: 'granviamurcia2@gmail.com'
+        },
+        license: {
+          name: 'MIT',
+          url: 'https://opensource.org/licenses/MIT'
         }
       },
       servers: [

@@ -3,10 +3,9 @@ paths:
     post:
       security:
         - bearerAuth: []
-      tags:
-        - Url
+      tags: [Url]
       summary: Create a short url
-      description: 
+      description: Create a shor url object and save it.
       operationId: createShortUrl
       consumes:
         - application/json
@@ -17,23 +16,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Url"
+              $ref: "#/components/schemas/NewUrl"
       responses:
         201:
           description: Object created
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  original:
-                    type: string
-                  shorten:
-                    type: string
-                  clicks:
-                    type: integer
-                  active:
-                    type: boolean
+                $ref: "#/components/schemas/ShortenedUrl"
         400:
           description: Internal error
         401:
@@ -44,8 +34,7 @@ paths:
       delete:
         security:
         - bearerAuth: []
-        tags:
-          - Url
+        tags: [Url]
         summary: Delete a short url
         description:
         operationId: deleteShortUrl
@@ -61,7 +50,7 @@ paths:
                 properties:
                   shorten:
                   type: string
-                  description: The shorten url to delete
+                  description: The shortened url to delete
                 required:
                   - shorten
                 example:
@@ -98,39 +87,3 @@ paths:
                   properties:
                     message:
                       type: string
-
-components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-
-  responses:
-    UnauthorizedError:
-      description: Access token is missing or invalid
-  schemas:
-    Url:
-      type: object
-      properties:
-        original:
-          type: string
-          description: User name
-        shorten:
-          type: string
-          description: User password
-        active:
-          type: boolean
-          description: ¿Active Url?
-        clicks:
-          type: Integer
-          minimun: 0
-          description: Number of clicks on the url
-      required:
-        - original
-        - active
-        - clicks
-      example:
-        original: https://test.test
-        active: true
-        clicks: 0

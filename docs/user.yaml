@@ -1,10 +1,43 @@
 paths:
+  /user/register:
+      post:
+        tags: [User]
+        summary: Register an user
+        description: Get a jwt token to use the API registering an user.
+        operationId: registerUser
+        consumes:
+          - application/json
+        produces:
+          - application/json
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        responses:
+          201:
+            description: An object with jwt token
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      value: "User created satisfactorily"
+                    token:
+                      type: string
+          409:
+            description: User already exists
+          500:
+            description: Server error
+
   /user/login:
     post:
-      tags:
-        - User
+      tags: [User]
       summary: Log In a user
-      description:
+      description: Get a token for a user that already is registered on the app
       operationId: loginUser
       consumes:
         - application/json
@@ -35,55 +68,3 @@ paths:
           description: Password must be invalid
         404:
           description: User not found
-  /user/register:
-      post:
-        tags:
-          - User
-        summary: Register an user
-        description:
-        operationId: registerUser
-        consumes:
-          - "application/json"
-        produces:
-          - application/json
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
-        responses:
-          201:
-            description: An object with jwt token
-            content:
-              application/json:
-                schema:
-                  type: object
-                  properties:
-                    message:
-                      type: string
-                      value: "User created satisfactorily"
-                    token:
-                      type: string
-          409:
-            description: User already exists
-          500:
-            description: Server error
-
-components:
-  schemas:
-    User:
-      type: object
-      properties:
-        username:
-          type: string
-          description: User name
-        password:
-          type: string
-          description: User password
-      required:
-        - username
-        - password
-      example:
-        username: test
-        password: testpassword

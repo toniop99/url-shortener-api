@@ -1,0 +1,73 @@
+tags:
+  - name: Url
+    description: Everithing related to urls (get, create, delete)
+  - name: User
+    description: Get access to the Api
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+
+  schemas:
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The user name
+        password:
+          type: string
+          description: The user password
+      required:
+        - username
+        - password
+      example:
+        username: test
+        password: testpassword
+    
+    NewUrl:
+      type: object
+      properties:
+        original:
+          type: string
+          description: The original Url
+        shorten:
+          type: string
+          description: A possible path for the shorted url
+        active:
+          type: boolean
+          description: Whether the url is active or not
+      required:
+        - original
+        - active
+      example:
+        original: https://test.test
+        active: true
+
+    ShortenedUrl:
+      type: object
+      properties:
+        original:
+          type: string
+          description: The original url
+        shorten:
+          type: string
+          description: The shorthen url
+        active:
+          type: boolean
+          description: Whether the url is active or not
+        clicks:
+          type: integer
+          description: The number of clicks on the shortened url.
+      example:
+        original: https://en.wikipedia.org/wiki/%22Hello,_World!%22_program
+        shorten: https://chapi.link/hello
+        active: true
+        clicks: 0
