@@ -1,11 +1,42 @@
 paths:
+  /:
+    get:
+      security:
+        - bearerAuth: []
+      tags: [Url]
+      summary: Get the user urls
+      description: Get all the urls that this user has created
+      operationId: getShortUrls
+      produces:
+        - application/json
+                    
+      responses:
+        201:
+          description: Object created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    description: An array with the user urls list
+                    items:
+                      $ref: "#/components/schemas/ShortenedUrl"
+        400:
+          description: Internal error
+        401:
+          $ref: "#/components/responses/UnauthorizedError"
+        404:
+          description: User not found
+
   /create:
     post:
       security:
         - bearerAuth: []
       tags: [Url]
       summary: Create a short url
-      description: Create a shor url object and save it.
+      description: Create a short url object and save it.
       operationId: createShortUrl
       consumes:
         - application/json

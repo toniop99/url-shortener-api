@@ -66,8 +66,12 @@ components:
         clicks:
           type: integer
           description: The number of clicks on the shortened url.
+        creator:
+          type: string
+          description: The id of the url creator
       example:
         original: https://en.wikipedia.org/wiki/%22Hello,_World!%22_program
         shorten: https://chapi.link/hello
         active: true
         clicks: 0
+        creator: 60c126f07f1f091e28e06ba7
