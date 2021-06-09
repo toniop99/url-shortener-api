@@ -36,7 +36,7 @@ async function startApi (): Promise<void> {
     app.use(morgan('dev'))
   }
 
-  app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer: true }))
+  app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs, { customCss: '.swagger-ui .topbar { display: none }', customSiteTitle: 'Api Documentation' }))
   app.use('/v1/api', shortenerRoutes)
   app.use('/v1/api/user', authenticationRoutes)
   app.use(redirectorRoutes)
