@@ -1,16 +1,29 @@
 import { Request, Response } from 'express'
 import { UrlModel } from '../database/models/UrlShortener'
-import { toReceivedUrlShortener } from '../utils/cheks/UrlShortener/typechecks'
+import { toReceivedUrlShortener, toSendUrlShortenerList } from '../utils/cheks/UrlShortener/typechecks'
+
+export async function getUserShortenUrls (req: Request, res: Response): Promise<void> {
+  try {
+    const user = req.user!
+
+    const userShorteredUrls = await UrlModel.find({ creator: user._id }).lean()
+    const urlsList = toSendUrlShortenerList(userShorteredUrls)
+    res.status(200).json({ data: urlsList })
+  } catch (e) {
+    res.status(400).json({ message: e.message })
+  }
+}
 
 export async function createShortenUrl (req: Request, res: Response): Promise<void> {
   try {
-    const newUrlEntry = toReceivedUrlShortener(req.body)
+    const newUrlEntry = toReceivedUrlShortener(req.body, req.user!)
 
     const newUrlModel = new UrlModel({
       original: newUrlEntry.original,
       shorten: newUrlEntry.shorten,
       clicks: newUrlEntry.clicks,
-      active: newUrlEntry.active
+      active: newUrlEntry.active,
+      creator: newUrlEntry.creator
     })
 
     await newUrlModel.save()
