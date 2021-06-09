@@ -1,5 +1,4 @@
 import { env } from './index'
-import path from 'path'
 import { SwaggerOptions } from 'swagger-ui-express'
 
 export const getSwaggerOptions = (): SwaggerOptions => {
@@ -19,7 +18,7 @@ export const getSwaggerOptions = (): SwaggerOptions => {
       },
       servers: [
         {
-          url: path.join(env.BASE_URL, 'v1/api')
+          url: env.BASE_URL + 'v1/api'
         }
       ]
     },
